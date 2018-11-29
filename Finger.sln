@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Finger", "Finger\Finger.vcxproj", "{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Debug|x64.ActiveCfg = Debug|x64
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Debug|x64.Build.0 = Debug|x64
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Debug|x86.ActiveCfg = Debug|Win32
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Debug|x86.Build.0 = Debug|Win32
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Release|x64.ActiveCfg = Release|x64
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Release|x64.Build.0 = Release|x64
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Release|x86.ActiveCfg = Release|Win32
+		{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B6FEA8A-EE96-4B7E-A92B-15D5C29C653B}
+	EndGlobalSection
+EndGlobal
