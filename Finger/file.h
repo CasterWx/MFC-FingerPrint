@@ -189,6 +189,8 @@ int ReadDatafromTextFile(char* srcFile, unsigned char* data, int iWidth, int iHe
 	fin.close();
 	return 0;
 }
+
+
 int ReadDatafromTextFile(char* srcFile, float* data, int iWidth, int iHeight) {
 	ifstream fin(srcFile, ios::in);
 	if (!fin) {
@@ -201,10 +203,11 @@ int ReadDatafromTextFile(char* srcFile, float* data, int iWidth, int iHeight) {
 	return 0;
 }
 
+
 int ShowImageInCtrl(CStatic &picCtrl,char *filename) {
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(filename));
-	int width = image.GetWidth();
+	int width = image.GetWidth();	
 	int height = image.GetHeight();
 
 	CRect rect;

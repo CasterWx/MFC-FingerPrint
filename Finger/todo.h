@@ -31,7 +31,6 @@ int ReadMinutiae(char* filename, MINUTIAE** minutiae) {
 	if (!fp) {
 		return -1;
 	}
-
 	const static int TemplateFileFlag = 0x3571027f;
 	int flag;
 	fread(&flag, sizeof(int), 1, fp);
