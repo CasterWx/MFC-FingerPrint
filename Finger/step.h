@@ -356,7 +356,7 @@ int Step12_Match(char *beginname,char *mdlfile,char *info) {
 	delete[] minu1;
 	delete[] minu2;
 	CopyFile(ToWideChar(srcImgFile),ToWideChar(dstImgFile),false);
-
+	sprintf(mdlfile,"%s %lf",mdlfile,similar);
 	CString name(mdlfile);
 	CString ok("YES ");
 	CString no("NO ");
@@ -394,7 +394,6 @@ int Step12_Identify(char *beginname ,char *info) {
 
 	for (int len = 0; len < m_FileList.size(); len++) {
 		CString fn = m_FileList[len]; 
-		
 		USES_CONVERSION;
 		char * matchName = T2A(fn);
 		Step12_Match(beginname, matchName, info);
