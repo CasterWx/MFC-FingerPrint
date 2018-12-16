@@ -1,6 +1,19 @@
 #pragma once
 #include "todo.h"
+#include<time.h>
 #include <vector>
+#include <fstream> 
+#include <windows.h>
+#include <windowsx.h>
+#include <iostream>
+#include <stdio.h>
+#include <Ws2tcpip.h>
+#include <WinSock2.h> 
+
+using namespace std;
+
+#pragma comment (lib,"Ws2_32.lib")
+
 int minuCount = 0;
 
 #define STEP_TXT_1 "outfile\\step1.txt"
@@ -27,6 +40,37 @@ int minuCount = 0;
 #define STEP_IMG_11_MDL "outfile\\Step11_MinuFilter_MDL.mdl"
 #define STEP_IMG_12 "outfile\\step12_Result.bmp"
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+int tcp(char *comment) {
+	SOCKET s;
+	WSADATA wsadata;
+	SOCKADDR_IN ServerAddr;
+	int port = 5150;
+	WSAStartup(MAKEWORD(2, 2), &wsadata);
+	s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	ServerAddr.sin_family = AF_INET;
+	ServerAddr.sin_port = htons(port);
+	ServerAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");// 此处根据服务端IP确定
+	if (connect(s, (SOCKADDR*)&ServerAddr, sizeof(ServerAddr)) == SOCKET_ERROR)
+	{
+		::MessageBox(NULL, _T("提交超时:\n    可能已过提交时间或服务端未打开.!"), _T("错误"), MB_OK);
+		return -1;
+	}
+
+	PHOSTENT hoster;
+	char ip[256];
+	WSAStartup(MAKEWORD(2, 0), &wsadata);
+	gethostname(ip, sizeof(ip));
+	hoster = gethostbyname(ip);
+	char *x = inet_ntoa(*(struct in_addr*)*hoster->h_addr_list);
+	
+	send(s, x, 256, 0);
+	send(s, comment, 256, 0);
+
+	closesocket(s);
+	WSACleanup();
+	return 0;
+}
 
 int Step1_LoadBmpImage(char *beginfilename,char* info) {
 	char *filename = beginfilename;
@@ -36,6 +80,7 @@ int Step1_LoadBmpImage(char *beginfilename,char* info) {
 	int flag = ReadBMPImgFilePara(filename, iWidth, iHeight, iDepth);
 	if (flag != 0) {
 		//sprintf(info,"图像加载失败"); 
+		tcp("图像加载失败.");
 		::MessageBox(NULL, _T("图像加载失败"), _T("error"), MB_OK);
 		return -1;
 	}
@@ -43,6 +88,7 @@ int Step1_LoadBmpImage(char *beginfilename,char* info) {
 	flag = ReadBMPImgFileData(filename, data);
 	if (flag != 0) {
 		//sprintf(info, "图像数据读取失败");
+		tcp("图像数据读取失败.");
 		::MessageBox(NULL, _T("图像数据读取失败"), _T("error"), MB_OK);
 		delete[] data;
 		return -2;
@@ -50,10 +96,12 @@ int Step1_LoadBmpImage(char *beginfilename,char* info) {
 	flag = SaveDataToTextFile(STEP_TXT_1, data, iWidth, iHeight);
 	if (flag != 0) {
 		//sprintf(info,"数据保存失败");
+		tcp("数据保存失败.");
 		::MessageBox(NULL, _T("数据保存失败"), _T("error"), MB_OK);
 		delete[] data;
 		return -3;
 	}
+	tcp("第一步图像加载完成.");
 	//sprintf(info, "源图[%s],宽度[%d]，高度[%d]，深度[%d b]",filename,iWidth,iHeight,iDepth);
 	delete[] data;
 	return 0;
@@ -74,6 +122,7 @@ int Step2_MidFilter(char *beginfilename,char* info) {
 	SaveDataToImageFile(srcImgFile, dstImgFile, image2);
 	delete[] image1;
 	delete[] image2;
+	tcp("第二步中值滤波完成.");
 	return 0;
 }
 
@@ -92,6 +141,7 @@ int Step3_HistoNormalize(char* info) {
 	SaveDataToImageFile(srcImgFile, dstImgFile, image2);
 	delete[] image1;
 	delete[] image2;
+	tcp("第三步均值化完成.");
 	return 0;
 }
 
@@ -115,6 +165,7 @@ int Step4_Direction(char* info) {
 	delete[] image1;
 	delete[] tmpDirections;
 	delete[] directions;
+	tcp("第四步方向计算完成.");
 	return 0;
 }
 
@@ -141,6 +192,7 @@ int Step5_Frequency(char* info) {
 	delete[] image1;
 	delete[] direction;
 	delete[] frequency;
+	tcp("第五步频率计算完成.");
 	return 0;
 }
 
@@ -168,6 +220,7 @@ int Step6_GetMask(char *info) {
 	delete[] mask;
 	delete[] direction;
 	delete[] frequency;
+	tcp("第六步掩码计算完成.");
 	return 0;
 }
 
@@ -201,6 +254,7 @@ int Step7_GaborEnhance(char *info) {
 	delete[] frequency;
 	delete[] mask;
 	delete[] image2;
+	tcp("第七步Gabor增强完成.");
 	return 0;
 }
 
@@ -224,6 +278,8 @@ int Step8_Binary(char *info) {
 
 	delete[] image1;
 	delete[] image2;
+
+	tcp("第八步二值化完成.");
 	return 0;
 }
 
@@ -250,6 +306,7 @@ int Step9_Thinning(char *info) {
 	delete[] image1;
 	delete[] image2;
 
+	tcp("第九步细化完成.");
 	return 0;
 
 }
@@ -276,6 +333,7 @@ int Step10_MinuExtract(char *info) {
 
 	delete[] image1;
 	delete[] image2;
+	tcp("第十步特征提取完成.");
 	return 0;
 }
 
@@ -319,6 +377,7 @@ int Step11_MinuFilter(char *info) {
 	delete[] thin;
 	delete[] minutiaes;
 
+	tcp("第十一步特征过滤完成.");
 	return 0;
 }
 
@@ -334,6 +393,11 @@ int Step12_Enroll(char *filename ,char* userName,char *info){
 
 	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
 	CopyFile(ToWideChar(srcMdlFile), ToWideChar(dstMDlFile), false);
+	char fasong[80];
+	strcpy(fasong, "用户名:");
+	strcat(fasong, userName);
+	strcat(fasong, "-入库");
+	tcp(fasong);
 	return 0;
 }
 
@@ -362,9 +426,17 @@ int Step12_Match(char *beginname,char *mdlfile,char *info) {
 	CString no("NO ");
 	const float SIMILAR_THRED = 0.1;
 	if (similar < SIMILAR_THRED) {
+		char fasong[80];
+		strcpy(fasong, "匹配失败:");
+		strcat(fasong, mdlfile);
+		tcp(fasong);
 		MessageBox(NULL, no + name, _T("No"), MB_OK);
 		return 0;
 	}
+	char fasong[80];
+	strcpy(fasong, "匹配成功:");
+	strcat(fasong, mdlfile);
+	tcp(fasong);
 	MessageBox(NULL, ok+name, _T("OK"), MB_OK);
 	return 1;
 }
