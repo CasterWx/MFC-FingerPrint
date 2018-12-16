@@ -7,7 +7,7 @@
 #include<iomanip>
 
 using namespace std;
-
+// vs ç¼–ç ä¸ºgbk
 void Sort(unsigned char*data, int dsize) {
 	unsigned char temp = 0;
 	for (int i = 0; i < dsize; i++) {
@@ -30,27 +30,27 @@ wchar_t*ToWideChar(char *str) {
 }
 
 int ReadBMPImgFilePara(char* fileName, int &width, int &height, int &depth) {
-	// ÔØÈëÍ¼Ïñ
+	// è½½å…¥å›¾åƒ
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(fileName));
 	if (FAILED(hResult) || (image.IsNull())) {
 		return -1;
 	}
-	// »ñµÃÍ¼Ïñ²ÎÊı
+	// è·å¾—å›¾åƒå‚æ•°
 	width = image.GetWidth();
 	height = image.GetHeight();
 	depth = image.GetBPP();
 	if (depth != 8) {
 		return -2;
 	}
-	// ÊÍ·Å±äÁ¿¿Õ¼ä
+	// é‡Šæ”¾å˜é‡ç©ºé—´
 	image.Destroy();
 
 	return 0;
 }
 
 int ReadBMPImgFileData(char *fileName, unsigned char *data) {
-	// ÔØÈëÍ¼Ïñ
+	// è½½å…¥å›¾åƒ
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(fileName));
 	if (FAILED(hResult) || image.IsNull()) {
@@ -63,7 +63,7 @@ int ReadBMPImgFileData(char *fileName, unsigned char *data) {
 		return -2;
 	}
 	memset(data, 0, width*height);
-	//¶ÁÈ¡Í¼ÏñÊı¾İ
+	//è¯»å–å›¾åƒæ•°æ®
 	int pitch = image.GetPitch();
 	unsigned char *pData1 = (unsigned char*)image.GetBits();
 	unsigned char* pData2 = data;
@@ -82,7 +82,7 @@ int ReadBMPImgFileData(char *fileName, unsigned char *data) {
 		}
 	}
 
-	// ÊÍ·Å¿Õ¼ä
+	// é‡Šæ”¾ç©ºé—´
 	image.Destroy();
 	return 0;
 }
@@ -145,7 +145,7 @@ int SaveDataToTextFile(char* dstFile, unsigned char*data, int width, int height)
 	if (!fout) {
 		return -1;
 	}
-	// °´Ö¸¶¨¸ñÊ½ÏòÎÄ¼şĞ´ÈëÊı¾İ
+	// æŒ‰æŒ‡å®šæ ¼å¼å‘æ–‡ä»¶å†™å…¥æ•°æ®
 	int space = 5;
 	for (int i = 0; i < height*width; i++) {
 		fout << setw(space) << int(data[i]);
@@ -174,18 +174,18 @@ int SaveDataToTextFile(char* dstFile, float *data, int width, int height) {
 	return 0;
 }
 int ReadDatafromTextFile(char* srcFile, unsigned char* data, int iWidth, int iHeight) {
-	// ´ò¿ªÔ´ÎÄ¼ş
+	// æ‰“å¼€æºæ–‡ä»¶
 	ifstream fin(srcFile, ios::in);
 	if (!fin) {
 		return -1;
 	}
-	// ¶ÁÈ¡Êı¾İ
+	// è¯»å–æ•°æ®
 	int d = 0;
 	for (int i = 0; i < iHeight*iWidth; i++) {
 		fin >> d;
 		data[i] = (unsigned char)d;
 	}
-	// ¹Ø±ÕÎÄ¼ş
+	// å…³é—­æ–‡ä»¶
 	fin.close();
 	return 0;
 }
