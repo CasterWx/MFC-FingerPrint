@@ -207,9 +207,11 @@
     <ResourceCompile Include="Finger.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="res\Finger.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\5.bmp" />
     <Image Include="res\Finger.ico" />
     <Image Include="temp\1.bmp" />
     <Image Include="temp\11.bmp" />
@@ -231,6 +233,7 @@
     <Image Include="temp\6.bmp" />
     <Image Include="temp\6_verify.bmp" />
     <Image Include="temp\a.bmp" />
+    <Image Include="temp\bitmap2.bmp" />
     <Image Include="temp\_verify.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

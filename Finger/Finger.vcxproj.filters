@@ -60,6 +60,7 @@
     <None Include="res\Finger.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Finger.ico">
@@ -126,6 +127,12 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="temp\153.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\..\5.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
