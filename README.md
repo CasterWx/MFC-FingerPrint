@@ -1,6 +1,12 @@
 # MFC-FingerPrint
 基于MFC开发的指纹识别系统.
 
+
+###### 欢迎关注公众号，开启和我的交流
+
+![weix](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1391533/o_qrcode_for_gh_f3457f4f73a1_258.jpg)
+
+
 ---------
 ##### 效果图如下:
 ![1](img/1.png)
